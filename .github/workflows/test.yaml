@@ -22,15 +22,19 @@ jobs:
   test:
     runs-on: ${{ matrix.config.os }}
 
+    defaults:
+      run:
+        shell: bash
+
     name: ${{ matrix.config.os }}
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,    r: 'release'}
-          - {os: windows-latest,  r: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
+          - {os: macos-latest}
+          - {os: windows-latest}
+          - {os: ubuntu-latest}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
