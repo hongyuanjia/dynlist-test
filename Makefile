@@ -25,7 +25,7 @@ endif
 
 nm_libsysb:
 ifeq ($(UNAME), Darwin)
-	nm /usr/lib/system/libSystem.B.dylib || true
+	nm /usr/lib/libSystem.B.dylib || true
 endif
 
 nm_libsysk:
