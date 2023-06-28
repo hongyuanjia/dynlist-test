@@ -7,7 +7,7 @@ else
 EXE = dynlist
 endif
 
-all: config dyncall test nm_libc nm_libsysb nm_libsysk nm_libsysp nm_libsyst
+all: config dyncall test otool_libc otool_libsysb otool_libsysk otool_libsysp otool_libsyst
 
 config:
 	cd dyncall && chmod +x configure && ./configure
@@ -18,29 +18,29 @@ dyncall:
 test:
 	${CC} main.c ${CFLAGS} -o ${EXE} && ./${EXE}
 
-nm_libc:
+otool_libc:
 ifeq ($(UNAME), Darwin)
-	nm /usr/lib/libc.dylib || true
+	otool -TV /usr/lib/libc.dylib || true
 endif
 
-nm_libsysb:
+otool_libsysb:
 ifeq ($(UNAME), Darwin)
-	nm /usr/lib/libSystem.B.dylib || true
+	otool -TV /usr/lib/libSystem.B.dylib || true
 endif
 
-nm_libsysk:
+otool_libsysk:
 ifeq ($(UNAME), Darwin)
-	nm /usr/lib/system/libsystem_kernel.dylib && head -c 10 || true
+	otool -TV /usr/lib/system/libsystem_kernel.dylib || true
 endif
 
-nm_libsysp:
+otool_libsysp:
 ifeq ($(UNAME), Darwin)
-	nm /usr/lib/system/libsystem_platform.dylib && head -c 10 || true
+	otool -TV /usr/lib/system/libsystem_platform.dylib || true
 endif
 
-nm_libsyst:
+otool_libsyst:
 ifeq ($(UNAME), Darwin)
-	nm /usr/lib/system/libsystem_pthread.dylib && head -c 10 || true
+	otool -TV /usr/lib/system/libsystem_pthread.dylib || true
 endif
 
-.PHONY: config dyncall test nm_libc nm_libsysb nm_libsysk nm_libsysp nm_libsyst
+.PHONY: config dyncall test otool_libc otool_libsysb otool_libsysk otool_libsysp otool_libsyst
