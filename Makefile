@@ -7,7 +7,7 @@ else
 EXE = dynlist
 endif
 
-all: config dyncall test nm_libc nm_libsysb nm_libsysk nm_libsysp
+all: config dyncall test nm_libc nm_libsysb nm_libsysk nm_libsysp nm_libsyst
 
 config:
 	cd dyncall && chmod +x configure && ./configure
@@ -35,7 +35,12 @@ endif
 
 nm_libsysp:
 ifeq ($(UNAME), Darwin)
-	nm /usr/lib/system/ibsystem_platform.dylib && head -c 10 || true
+	nm /usr/lib/system/libsystem_platform.dylib && head -c 10 || true
 endif
 
-.PHONY: config dyncall test nm_libc nm_libsysb nm_libsysk nm_libsysp
+nm_libsyst:
+ifeq ($(UNAME), Darwin)
+	nm /usr/lib/system/libsystem_pthread.dylib && head -c 10 || true
+endif
+
+.PHONY: config dyncall test nm_libc nm_libsysb nm_libsysk nm_libsysp nm_libsyst
